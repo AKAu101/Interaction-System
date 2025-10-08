@@ -17,7 +17,9 @@ public class PlayerInteraction : MonoBehaviour
         if (context.performed && currentInteractable != null)
         {
             currentInteractable.Interact();
-            inventory.AddItem(currentInteractable.gameObject);
+            //inventory.AddItem(currentInteractable.gameObject);
+            //Inventory.Instance.AddItem(currentInteractable.ItemType);
+            //ich hab das verlegt auf das UnityEvent und ein WorldItem script
             Debug.Log($"Interacted with: {currentInteractable.gameObject.name}");
         }
     }
@@ -60,12 +62,12 @@ public class PlayerInteraction : MonoBehaviour
     {
         currentInteractable = interactable;
         currentInteractable.EnableOutline();
-        GUIController.instance.EnableInteractionText(currentInteractable.message);
+        GUIController.Instance.EnableInteractionText(currentInteractable.message);
     }
     
     void DisableCurrentInteractable()
     {
-        GUIController.instance.DisableInteractionText();
+        GUIController.Instance.DisableInteractionText();
         if (currentInteractable != null)
         {
             currentInteractable.DisableOutline();

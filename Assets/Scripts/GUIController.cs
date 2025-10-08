@@ -1,15 +1,16 @@
 using UnityEngine;
 using TMPro;
+using Generals;
 
-public class GUIController : MonoBehaviour
+public class GUIController : Singleton<GUIController>
 {
     [SerializeField] TMP_Text interactionText;
-    public static GUIController instance;
+    //public static GUIController instance;
 
-    private void Awake()
-    {
-        instance = this;
-    }
+    //private void Awake()
+    //{
+    //    instance = this;
+    //}
 
     public void EnableInteractionText(string text)
     {

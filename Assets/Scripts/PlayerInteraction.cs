@@ -5,6 +5,7 @@ public class PlayerInteraction : MonoBehaviour
 {
     public float playerReach = 3f;
     Interactable currentInteractable;
+    [SerializeField] Inventory inventory;
     
     void Update()
     {
@@ -16,6 +17,7 @@ public class PlayerInteraction : MonoBehaviour
         if (context.performed && currentInteractable != null)
         {
             currentInteractable.Interact();
+            inventory.AddItem(currentInteractable.gameObject);
             Debug.Log($"Interacted with: {currentInteractable.gameObject.name}");
         }
     }

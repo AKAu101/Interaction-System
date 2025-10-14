@@ -79,7 +79,10 @@ public class ItemView : MonoBehaviour,IBeginDragHandler,IDragHandler,IEndDragHan
             //-> slot zu inventar matchen
             var slot = hit.transform.gameObject.GetComponent<SlotView>().Slot;
             Debug.Log($"EndDragSlot:{slot}");
-            Inventory.Instance.TryMoveItem(referencedSlot,slot);
+            if (!Inventory.Instance.TryMoveItem(referencedSlot, slot)) {
+                transform.SetParent(dragStartParent.transform);
+                transform.position = dragStartPos;
+            }
         }
         else
         {

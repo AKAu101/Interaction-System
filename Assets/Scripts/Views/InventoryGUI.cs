@@ -37,7 +37,6 @@ public class InventoryGUI : Singleton<InventoryGUI>
         foreach (ItemStack s in Inventory.Instance.GetStacks())
         {
             int slot = Inventory.Instance.SlotDictionary[s.ItemType];
-            
         }
     }
 
@@ -56,10 +55,23 @@ public class InventoryGUI : Singleton<InventoryGUI>
         return ViewDictionary[slot];
     }
 
-    public void MoveViewDict(int referencedSlot, int slot)
+    public void MoveViewDict(int referencedSlot, int newSlot)
     {
-        ViewDictionary[slot] = ViewDictionary[referencedSlot];
+        ViewDictionary[newSlot] = ViewDictionary[referencedSlot];
         ViewDictionary.Remove(referencedSlot);
+        ViewDictionary[newSlot].SetReferencedSlot(newSlot);
+    }
+
+    public bool SwapViewDictEntries(int referencedSlot, int newSlot)
+    {
+        //temporarily save the original entry at newSlot
+        //move the referencedSlot entry to newSlot
+        //save the temp saved entry to referencedSlot
+        ///moved to general helper in DictionaryExtension
+        
+        ViewDictionary[referencedSlot].SetReferencedSlot(newSlot);
+        ViewDictionary[newSlot].SetReferencedSlot(referencedSlot);
+        return ViewDictionary.SwapEntries(referencedSlot, newSlot);
     }
 
     public void UpdateView()

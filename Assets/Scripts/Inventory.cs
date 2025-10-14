@@ -102,41 +102,51 @@ public class Inventory : Singleton<Inventory>
         return false;
     }
 
-    public void TryMoveItem(int referencedSlot, int slot)
+    public bool TryMoveItem(int referencedSlot, int newSlot)
     {
         Debug.Log("TryMoveItenm"); 
         //gucken ob an der stelle schon was ist, wenn ja dann tauschen 
          //ansonsten
 
-         if (!ItemDictionary.ContainsKey(slot))
+         if (!ItemDictionary.ContainsKey(newSlot))
          {
              ItemStack stack = ItemDictionary[referencedSlot];
              //ItemDictionary[slot] = ItemDictionary[referencedSlot];
-             ItemDictionary.Add(slot,stack);
+             ItemDictionary.Add(newSlot,stack);
              ItemDictionary.Remove(referencedSlot);
-             SlotDictionary[stack.ItemType] = slot;
+             SlotDictionary[stack.ItemType] = newSlot;
 
-             InventoryGUI.Instance.GetView(referencedSlot).SetReferencedSlot(slot);
-             InventoryGUI.Instance.MoveViewDict(referencedSlot, slot); //DAS FEHLT NLOCH FÜR DEN ELSE BRANCH WENN MAN ACTUALLY SWAPPT
-             InventoryGUI.Instance.UpdateView();    
+             //InventoryGUI.Instance.GetView(referencedSlot).SetReferencedSlot(newSlot); => moved to MoveViewDict() 
+             InventoryGUI.Instance.MoveViewDict(referencedSlot, newSlot); //DAS FEHLT NLOCH FÜR DEN ELSE BRANCH WENN MAN ACTUALLY SWAPPT
+            
          }
          else
          {
-             //nochmal neu machen damit es mit add und remove ist
-             //save dragging item to temp
-             ItemStack s = new ItemStack();
-             s.ItemType = ItemDictionary[referencedSlot].ItemType;
-             s.Amount = ItemDictionary[referencedSlot].Amount;
-             
-             //swap slot item to drag origin slot
-             ItemDictionary[referencedSlot] = ItemDictionary[slot];
-             InventoryGUI.Instance.GetView(slot).SetReferencedSlot(referencedSlot);
-             
-             //put saved item into new slot
-             ItemDictionary[slot] = s;
-             InventoryGUI.Instance.GetView(referencedSlot).SetReferencedSlot(slot);
-         }
+
+            ///save dragging item to temp
+            ///ItemStack s = new ItemStack();
+            ///s.ItemType = ItemDictionary[referencedSlot].ItemType;
+            ///s.Amount = ItemDictionary[referencedSlot].Amount;
+            ///
+            ///swap slot item to drag origin slot
+            ///ItemDictionary[referencedSlot] = ItemDictionary[slot];
+            ///InventoryGUI.Instance.GetView(slot).SetReferencedSlot(referencedSlot);
+            ///
+            ///put saved item into new slot
+            ///ItemDictionary[slot] = s;
+            ///InventoryGUI.Instance.GetView(referencedSlot).SetReferencedSlot(slot);
+            //moved to helper in DictionaryExtensions.cs
+
+             ItemSO first = ItemDictionary[referencedSlot].ItemType;
+             ItemSO second = ItemDictionary[newSlot].ItemType;
+            if (SlotDictionary.SwapEntries(first, second) == false) { Debug.LogWarning("Swapping slot dict unsuccfesful"); return false; }
+
+            if (ItemDictionary.SwapEntries(referencedSlot, newSlot) == false) { Debug.LogWarning("Swapping item dict unsuccfesful"); return false; }
+
+            if (InventoryGUI.Instance.SwapViewDictEntries(referencedSlot, newSlot) == false) { Debug.LogWarning("Swapping view dict unsuccfesful"); return false; }
+        }
          InventoryGUI.Instance.UpdateView();
+        return true;
     }
 
     public List<ItemStack> GetStacks()

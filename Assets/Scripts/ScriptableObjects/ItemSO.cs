@@ -4,7 +4,7 @@ using UnityEngine;
 public class ItemSO : ScriptableObject
 {
     public Sprite icon;
-    public string name;
+    public new string name;
     public string description;
-    public bool isUsable = false;
+    public bool isUsable;
 }

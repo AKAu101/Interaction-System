@@ -4,14 +4,14 @@ using UnityEngine.InputSystem;
 public class PlayerInteraction : MonoBehaviour
 {
     public float playerReach = 3f;
-    Interactable currentInteractable;
-    [SerializeField] Inventory inventory;
-    
-    void Update()
+    [SerializeField] private Inventory inventory;
+    private Interactable currentInteractable;
+
+    private void Update()
     {
         CheckInteraction();
     }
-    
+
     public void OnInteract(InputAction.CallbackContext context)
     {
         if (context.performed && currentInteractable != null)
@@ -24,16 +24,16 @@ public class PlayerInteraction : MonoBehaviour
         }
     }
 
-    void CheckInteraction()
+    private void CheckInteraction()
     {
         RaycastHit hit;
-        Ray ray = new Ray(Camera.main.transform.position, Camera.main.transform.forward);
+        var ray = new Ray(Camera.main.transform.position, Camera.main.transform.forward);
         if (Physics.Raycast(ray, out hit, playerReach))
         {
             if (hit.collider.tag == "Interactable") // if looking at an interactable object
             {
-                Interactable newInteractable = hit.collider.GetComponent<Interactable>();
-                
+                var newInteractable = hit.collider.GetComponent<Interactable>();
+
                 if (newInteractable.enabled)
                 {
                     if (currentInteractable != newInteractable)
@@ -58,14 +58,14 @@ public class PlayerInteraction : MonoBehaviour
         }
     }
 
-    void SetNewCurrentInteractable(Interactable interactable)
+    private void SetNewCurrentInteractable(Interactable interactable)
     {
         currentInteractable = interactable;
         currentInteractable.EnableOutline();
         GUIController.Instance.EnableInteractionText(currentInteractable.message);
     }
-    
-    void DisableCurrentInteractable()
+
+    private void DisableCurrentInteractable()
     {
         GUIController.Instance.DisableInteractionText();
         if (currentInteractable != null)

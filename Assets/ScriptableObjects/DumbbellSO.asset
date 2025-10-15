@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0ef7bcb4245c0fc4a9c40f586339812f, type: 3}
-  m_Name: TestSO
+  m_Name: DumbbellSO
   m_EditorClassIdentifier: Assembly-CSharp::ItemSO
-  icon: {fileID: 0}
-  name: 
-  description: 
+  icon: {fileID: 21300000, guid: 6874111768113534eaa9c70ed8554639, type: 3}
+  name: Dumbbell
+  description: Light Weight
   isUsable: 0

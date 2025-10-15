@@ -1,10 +1,10 @@
-using UnityEngine;
-using TMPro;
 using Generals;
+using TMPro;
+using UnityEngine;
 
 public class GUIController : Singleton<GUIController>
 {
-    [SerializeField] TMP_Text interactionText;
+    [SerializeField] private TMP_Text interactionText;
     //public static GUIController instance;
 
     //private void Awake()

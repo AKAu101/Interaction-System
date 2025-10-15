@@ -1,20 +1,19 @@
-using System;
 using UnityEngine;
 using UnityEngine.Events;
 
 public class Interactable : MonoBehaviour
 {
-    private Outline outline;
     public string message;
-    
+
     public UnityEvent OnInteract;
-    
-    void Start()
+    private Outline outline;
+
+    private void Start()
     {
         outline = GetComponent<Outline>();
         DisableOutline();
     }
-    
+
     public void Interact()
     {
         OnInteract.Invoke();
@@ -22,17 +21,11 @@ public class Interactable : MonoBehaviour
 
     public void DisableOutline()
     {
-        if (outline != null)
-        {
-            outline.enabled = false;
-        }
+        if (outline != null) outline.enabled = false;
     }
 
     public void EnableOutline()
     {
-        if (outline != null)
-        {
-            outline.enabled = true;
-        }
+        if (outline != null) outline.enabled = true;
     }
 }

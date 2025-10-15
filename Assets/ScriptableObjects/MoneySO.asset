@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ef7bcb4245c0fc4a9c40f586339812f, type: 3}
   m_Name: MoneySO
   m_EditorClassIdentifier: Assembly-CSharp::ItemSO
-  icon: {fileID: 10901, guid: 0000000000000000f000000000000000, type: 0}
+  icon: {fileID: 21300000, guid: aece156578bce5f4085e5924ade8f0db, type: 3}
   name: Money
-  description: geld ist teuer
+  description: money is expensive
   isUsable: 0

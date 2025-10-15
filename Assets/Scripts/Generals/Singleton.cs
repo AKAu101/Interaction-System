@@ -1,11 +1,11 @@
 using UnityEngine;
 
-namespace  Generals
+namespace Generals
 {
     public class Singleton<T> : MonoBehaviour where T : MonoBehaviour
     {
-
         public static T Instance;
+
         // Start is called once before the first execution of Update after the MonoBehaviour is created
         protected virtual void Awake()
         {
@@ -14,6 +14,7 @@ namespace  Generals
                 Destroy(gameObject);
                 return;
             }
+
             Instance = this as T;
         }
 
@@ -24,4 +25,3 @@ namespace  Generals
         }
     }
 }
-

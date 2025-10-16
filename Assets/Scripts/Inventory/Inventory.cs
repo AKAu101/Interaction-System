@@ -118,6 +118,13 @@ public class Inventory : Singleton<Inventory>
             return false;
         }
 
+        // If source and target are the same, do nothing (item dropped on itself)
+        if (sourceSlot == targetSlot)
+        {
+            Debug.Log("Item dropped on its own slot, no action needed.");
+            return true;
+        }
+
         if (!slotToStack.ContainsKey(targetSlot))
         {
             var stack = slotToStack[sourceSlot];

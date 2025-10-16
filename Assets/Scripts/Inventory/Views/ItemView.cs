@@ -2,11 +2,13 @@ using Generals;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using TMPro;
 
 public class ItemView : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
     [SerializeField] private GameObject wrapper;
     [SerializeField] private Image image;
+    [SerializeField] private TextMeshProUGUI countText;
     [SerializeField] private LayerMask dropAreaLayer;
     private GameObject dragStartParent;
 
@@ -54,16 +56,36 @@ public class ItemView : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
         }
         else
         {
+            // No drop area hit, return to original position
             transform.SetParent(dragStartParent.transform);
             transform.position = dragStartPosition;
         }
+
+        wrapper.SetActive(false);
     }
 
 
-    public void Setup(ItemSO itemType, int slot)
+    public void Setup(ItemSO itemType, int slot, int amount)
     {
         image.sprite = itemType.icon;
         CurrentSlotIndex = slot;
+        UpdateAmount(amount);
+    }
+
+    public void UpdateAmount(int amount)
+    {
+        if (countText != null)
+        {
+            if (amount > 1)
+            {
+                countText.text = amount.ToString();
+                countText.gameObject.SetActive(true);
+            }
+            else
+            {
+                countText.gameObject.SetActive(false);
+            }
+        }
     }
 
     public void SetReferencedSlot(int slot)

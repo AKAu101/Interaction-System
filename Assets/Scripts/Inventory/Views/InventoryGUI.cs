@@ -50,7 +50,8 @@ public class InventoryGUI : Singleton<InventoryGUI>
             var view = instance.GetComponent<ItemView>();
             if (view != null)
             {
-                view.Setup(itemType, slot);
+                var stack = Inventory.Instance.slotToStack[slot];
+                view.Setup(itemType, slot, stack.Amount);
                 IntegrateView(view);
             }
             else
@@ -58,15 +59,34 @@ public class InventoryGUI : Singleton<InventoryGUI>
                 Debug.LogWarning("ItemView component not found on itemViewPrefab!");
             }
         }
+        else
+        {
+            // Item already exists in this slot, just update the count
+            var view = slotToView[slot];
+            var stack = Inventory.Instance.slotToStack[slot];
+            view.UpdateAmount(stack.Amount);
+        }
     }
 
     private void HandleItemRemoved(ItemSO itemType, int slot)
     {
         if (slotToView.ContainsKey(slot))
         {
-            var view = slotToView[slot];
-            if (view != null) Destroy(view.gameObject);
-            slotToView.Remove(slot);
+            // Check if the slot still has items
+            if (Inventory.Instance.slotToStack.ContainsKey(slot))
+            {
+                // Update the count
+                var view = slotToView[slot];
+                var stack = Inventory.Instance.slotToStack[slot];
+                view.UpdateAmount(stack.Amount);
+            }
+            else
+            {
+                // No more items in this slot, remove the view
+                var view = slotToView[slot];
+                if (view != null) Destroy(view.gameObject);
+                slotToView.Remove(slot);
+            }
         }
     }
 

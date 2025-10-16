@@ -6,6 +6,9 @@ public static class IDictionaryExtension
     {
         if (!dict.ContainsKey(first) || !dict.ContainsKey(second)) return false;
 
+        // If trying to swap the same key, do nothing
+        if (EqualityComparer<TKey>.Default.Equals(first, second)) return true;
+
         var entryAtSecond = dict[second];
         var entryAtFirst = dict[first];
 

@@ -5,12 +5,6 @@ using UnityEngine;
 public class GUIController : Singleton<GUIController>
 {
     [SerializeField] private TMP_Text interactionText;
-    //public static GUIController instance;
-
-    //private void Awake()
-    //{
-    //    instance = this;
-    //}
 
     public void EnableInteractionText(string text)
     {

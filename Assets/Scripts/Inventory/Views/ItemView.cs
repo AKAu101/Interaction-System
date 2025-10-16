@@ -60,8 +60,6 @@ public class ItemView : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
             transform.SetParent(dragStartParent.transform);
             transform.position = dragStartPosition;
         }
-
-        wrapper.SetActive(false);
     }
 
 

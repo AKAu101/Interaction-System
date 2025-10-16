@@ -59,7 +59,7 @@ public class InventoryGUI : Singleton<InventoryGUI>
                 Debug.LogWarning("ItemView component not found on itemViewPrefab!");
             }
         }
-        else
+        else 
         {
             // Item already exists in this slot, just update the count
             var view = slotToView[slot];

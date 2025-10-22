@@ -15,4 +15,4 @@ MonoBehaviour:
   icon: {fileID: 21300000, guid: aece156578bce5f4085e5924ade8f0db, type: 3}
   name: Money
   description: money is expensive
-  isUsable: 0
+  isConsumable: 1

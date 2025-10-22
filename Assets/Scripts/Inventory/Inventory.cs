@@ -99,6 +99,33 @@ public class Inventory : Singleton<Inventory>
         return false;
     }
 
+    public bool RemoveItemFromSlot(int slot, int amount = 1)
+    {
+        if (!slotToStack.ContainsKey(slot))
+        {
+            Debug.LogWarning($"No item found in slot {slot}");
+            return false;
+        }
+
+        var stack = slotToStack[slot];
+        var itemType = stack.ItemType;
+
+        stack.Amount -= amount;
+        Debug.Log($"Consumed {itemType.name} from slot {slot}. Amount remaining: {stack.Amount}");
+
+        if (stack.Amount <= 0)
+        {
+            slotToStack.Remove(slot);
+        }
+
+        if (OnItemRemoved != null)
+        {
+            OnItemRemoved.Invoke(itemType, slot);
+        }
+
+        return true;
+    }
+
     private int FindSlotWithItem(ItemSO itemType)
     {
         foreach (var kvp in slotToStack)

@@ -155,6 +155,13 @@ public class InventoryGUI : Singleton<InventoryGUI>
                 Cursor.visible = false;
                 wrapper.SetActive(false);
                 isVisible = false;
+
+                // Hide context menu when closing inventory
+                var contextMenu = FindObjectOfType<ItemContextMenu>();
+                if (contextMenu != null)
+                {
+                    contextMenu.HideMenu();
+                }
             }
             else
             {

@@ -66,12 +66,18 @@ public class ItemContextMenu : MonoBehaviour
         return false;
     }
 
-    public void ShowMenu(Vector3 position, int slotIndex, ItemView itemView)
+    public void ShowMenu(Vector3 position, int slotIndex, ItemView itemView, ItemSO itemData)
     {
         if (menuPanel != null)
         {
             currentSlotIndex = slotIndex;
             currentItemView = itemView;
+
+            // Show/hide consume button based on isConsumable
+            if (consumeButton != null)
+            {
+                consumeButton.gameObject.SetActive(itemData != null && itemData.isConsumable);
+            }
 
             // Position the menu at the cursor
             menuPanel.transform.position = position;
@@ -92,7 +98,12 @@ public class ItemContextMenu : MonoBehaviour
     private void OnConsumeClicked()
     {
         Debug.Log($"Consume clicked for slot {currentSlotIndex}");
-        // Functionality will be added later
+
+        if (Inventory.Instance != null && currentSlotIndex >= 0)
+        {
+            Inventory.Instance.RemoveItemFromSlot(currentSlotIndex);
+        }
+
         HideMenu();
     }
 

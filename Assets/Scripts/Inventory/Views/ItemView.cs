@@ -13,6 +13,7 @@ public class ItemView : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
     private GameObject dragStartParent;
 
     private Vector3 dragStartPosition;
+    private ItemSO currentItemData;
 
     public int CurrentSlotIndex { get; private set; }
 
@@ -65,6 +66,7 @@ public class ItemView : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
 
     public void Setup(ItemSO itemType, int slot, int amount)
     {
+        currentItemData = itemType;
         image.sprite = itemType.icon;
         CurrentSlotIndex = slot;
         UpdateAmount(amount);
@@ -102,8 +104,8 @@ public class ItemView : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
             var contextMenu = FindObjectOfType<ItemContextMenu>();
             if (contextMenu != null)
             {
-                // Show menu at mouse position
-                contextMenu.ShowMenu(MouseUtil.GetRawMouse(), CurrentSlotIndex, this);
+                // Show menu at mouse position with item data
+                contextMenu.ShowMenu(MouseUtil.GetRawMouse(), CurrentSlotIndex, this, currentItemData);
             }
             else
             {

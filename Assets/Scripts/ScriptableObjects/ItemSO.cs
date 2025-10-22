@@ -6,5 +6,5 @@ public class ItemSO : ScriptableObject
     public Sprite icon;
     public new string name;
     public string description;
-    public bool isUsable;
+    public bool isConsumable;
 }

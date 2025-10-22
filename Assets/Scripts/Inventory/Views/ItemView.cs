@@ -4,7 +4,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using TMPro;
 
-public class ItemView : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
+public class ItemView : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IPointerClickHandler
 {
     [SerializeField] private GameObject wrapper;
     [SerializeField] private Image image;
@@ -89,5 +89,26 @@ public class ItemView : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
     public void SetReferencedSlot(int slot)
     {
         CurrentSlotIndex = slot;
+    }
+
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        // Check for right-click
+        if (eventData.button == PointerEventData.InputButton.Right)
+        {
+            Debug.Log($"Right-clicked on item in slot {CurrentSlotIndex}");
+
+            // Find the context menu in the scene
+            var contextMenu = FindObjectOfType<ItemContextMenu>();
+            if (contextMenu != null)
+            {
+                // Show menu at mouse position
+                contextMenu.ShowMenu(MouseUtil.GetRawMouse(), CurrentSlotIndex, this);
+            }
+            else
+            {
+                Debug.LogWarning("ItemContextMenu not found in scene!");
+            }
+        }
     }
 }

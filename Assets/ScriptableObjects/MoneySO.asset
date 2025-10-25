@@ -16,3 +16,4 @@ MonoBehaviour:
   name: Money
   description: money is expensive
   isConsumable: 1
+  itemPrefab: {fileID: 4168843507142889419, guid: c8bb8fb89cec98f44901fa58756cf99b, type: 3}

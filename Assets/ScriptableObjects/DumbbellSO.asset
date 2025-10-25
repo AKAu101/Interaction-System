@@ -15,4 +15,5 @@ MonoBehaviour:
   icon: {fileID: 21300000, guid: 6874111768113534eaa9c70ed8554639, type: 3}
   name: Dumbbell
   description: Light Weight
-  isUsable: 0
+  isConsumable: 0
+  itemPrefab: {fileID: 3538834392430873350, guid: b8419a77af58e6349abf8c7faeca4cda, type: 3}

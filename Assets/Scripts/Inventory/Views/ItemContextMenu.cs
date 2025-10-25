@@ -110,7 +110,31 @@ public class ItemContextMenu : MonoBehaviour
     private void OnDropClicked()
     {
         Debug.Log($"Drop clicked for slot {currentSlotIndex}");
-        // Functionality will be added later
+
+        if (Inventory.Instance != null && currentSlotIndex >= 0)
+        {
+            // Get the item data before removing it
+            if (Inventory.Instance.slotToStack.TryGetValue(currentSlotIndex, out ItemStack stack))
+            {
+                ItemSO itemData = stack.ItemType;
+
+                // Remove the item from inventory
+                Inventory.Instance.RemoveItemFromSlot(currentSlotIndex);
+
+                // Instantiate the item prefab in the world
+                if (itemData.itemPrefab != null && Camera.main != null)
+                {
+                    Vector3 dropPosition = Camera.main.transform.position + Camera.main.transform.forward * 2f;
+                    Instantiate(itemData.itemPrefab, dropPosition, Quaternion.identity);
+                    Debug.Log($"Dropped {itemData.name} at position {dropPosition}");
+                }
+                else
+                {
+                    Debug.LogWarning("Item prefab or camera not found!");
+                }
+            }
+        }
+
         HideMenu();
     }
 }

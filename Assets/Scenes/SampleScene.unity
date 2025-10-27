@@ -800,7 +800,7 @@ MonoBehaviour:
   - m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 426762092}
-        m_TargetAssemblyTypeName: PlayerInteraction, Assembly-CSharp
+        m_TargetAssemblyTypeName: PlayerInteractionController, Assembly-CSharp
         m_MethodName: OnInteract
         m_Mode: 0
         m_Arguments:
@@ -816,7 +816,7 @@ MonoBehaviour:
   - m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1627168673}
-        m_TargetAssemblyTypeName: InventoryGUI, Assembly-CSharp
+        m_TargetAssemblyTypeName: InventoryUIManager, Assembly-CSharp
         m_MethodName: OnOpenInventory
         m_Mode: 0
         m_Arguments:
@@ -988,9 +988,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 426762083}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b29bcdfe84330414ea631688b63613e7, type: 3}
+  m_Script: {fileID: 11500000, guid: 46445e5eb6566094aab349f38370912d, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PlayerInteraction
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerInteractionController
   playerReach: 3
   inventory: {fileID: 777914794}
 --- !u!1 &503795987
@@ -1267,9 +1267,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 777914793}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e882a0ff9c5cb464292b33080ef05f67, type: 3}
+  m_Script: {fileID: 11500000, guid: 19874011b68ec3e498040084c50297c1, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ItemContextMenu
+  m_EditorClassIdentifier: Assembly-CSharp::InventoryItemContextMenu
   menuPanel: {fileID: 1994236470}
   consumeButton: {fileID: 887924494}
   dropButton: {fileID: 911693730}
@@ -1847,12 +1847,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1168649613}
+  - component: {fileID: 1168649614}
   - component: {fileID: 1168649612}
   - component: {fileID: 1168649611}
   - component: {fileID: 1168649610}
-  - component: {fileID: 1168649614}
   m_Layer: 5
-  m_Name: GUI
+  m_Name: UI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1951,9 +1951,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 1168649609}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3f7d4f8538bab794f8edcd22ab45d008, type: 3}
+  m_Script: {fileID: 11500000, guid: 6670d2ae8d495764198ec539b596cdb3, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::HUDController
+  m_EditorClassIdentifier: Assembly-CSharp::InteractionTextUI
   interactionText: {fileID: 971254652}
 --- !u!1 &1174181894
 GameObject:
@@ -2291,7 +2291,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1325267170}
   m_Layer: 0
-  m_Name: In Game UI
+  m_Name: Default
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2825,10 +2825,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1627168671}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fa5eeddb9c6924345adb150d87dcab65, type: 3}
+  m_Script: {fileID: 11500000, guid: 8855c0ddb9969c74691092b1aa525642, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: '::'
+  m_EditorClassIdentifier: Assembly-CSharp::InventoryUIManager
   wrapper: {fileID: 153924509}
+  itemViewPrefab: {fileID: 7934908506650247288, guid: 0b95636622847574f976927ab3428ac9, type: 3}
   slotObjects:
   - {fileID: 1874445717}
   - {fileID: 1892578965}
@@ -2839,7 +2840,6 @@ MonoBehaviour:
   - {fileID: 1742114833}
   - {fileID: 1418894075}
   - {fileID: 760449160}
-  itemViewPrefab: {fileID: 7934908506650247288, guid: 0b95636622847574f976927ab3428ac9, type: 3}
 --- !u!1 &1680078818
 GameObject:
   m_ObjectHideFlags: 0

@@ -925,7 +925,7 @@ PlayerSettings:
   cloudProjectId: 41539468-a3aa-487a-9cab-5d8ac9350514
   framebufferDepthMemorylessMode: 0
   qualitySettingsNames: []
-  projectName: 3D First Person Controller System
+  projectName: Interaction System
   organizationId: akuudev
   cloudEnabled: 0
   legacyClampBlendShapeWeights: 0

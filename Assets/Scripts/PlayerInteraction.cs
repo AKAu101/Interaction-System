@@ -17,9 +17,6 @@ public class PlayerInteraction : MonoBehaviour
         if (context.performed && currentInteractable != null)
         {
             currentInteractable.Interact();
-            //inventory.AddItem(currentInteractable.gameObject);
-            //Inventory.Instance.AddItem(currentInteractable.ItemType);
-            //ich hab das verlegt auf das UnityEvent und ein WorldItem script
             Debug.Log($"Interacted with: {currentInteractable.gameObject.name}");
         }
     }

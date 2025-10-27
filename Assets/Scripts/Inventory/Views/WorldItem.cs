@@ -7,5 +7,6 @@ public class WorldItem : MonoBehaviour
     public void PickUp()
     {
         Inventory.Instance.AddItem(itemType);
+        Destroy(gameObject);
     }
 }

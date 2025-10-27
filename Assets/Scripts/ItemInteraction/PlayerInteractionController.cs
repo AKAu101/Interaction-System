@@ -1,7 +1,11 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerInteraction : MonoBehaviour
+/// <summary>
+///     Handles player interaction with interactable objects in the world.
+///     Performs raycasting to detect nearby interactables and manages highlighting.
+/// </summary>
+public class PlayerInteractionController : MonoBehaviour
 {
     public float playerReach = 3f;
     [SerializeField] private Inventory inventory;
@@ -59,12 +63,12 @@ public class PlayerInteraction : MonoBehaviour
     {
         currentInteractable = interactable;
         currentInteractable.EnableOutline();
-        GUIController.Instance.EnableInteractionText(currentInteractable.message);
+        InteractionTextUI.Instance.EnableInteractionText(currentInteractable.message);
     }
 
     private void DisableCurrentInteractable()
     {
-        GUIController.Instance.DisableInteractionText();
+        InteractionTextUI.Instance.DisableInteractionText();
         if (currentInteractable != null)
         {
             currentInteractable.DisableOutline();

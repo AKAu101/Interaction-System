@@ -1,10 +1,13 @@
 using UnityEngine;
 using UnityEngine.Events;
 
+/// <summary>
+///     Component that marks a GameObject as interactable.
+///     Uses Outline component for visual feedback when hovering.
+/// </summary>
 public class Interactable : MonoBehaviour
 {
     public string message;
-
     public UnityEvent OnInteract;
     private Outline outline;
 

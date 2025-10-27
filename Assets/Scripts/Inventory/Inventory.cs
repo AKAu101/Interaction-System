@@ -4,6 +4,9 @@ using System.Linq;
 using Generals;
 using UnityEngine;
 
+/// <summary>
+///     Represents a stack of items in the inventory with a type and quantity.
+/// </summary>
 public class ItemStack
 {
     public ItemStack(ItemSO itemType, int amount)
@@ -16,11 +19,25 @@ public class ItemStack
     public int Amount { get; set; }
 }
 
-public class Inventory : Singleton<Inventory>
+/// <summary>
+///     Core inventory system managing item storage, stacking, and movement.
+///     Handles adding, removing, and organizing items across slots with event notifications.
+/// </summary>
+public class Inventory : Singleton<Inventory>, IInventoryManagement
 {
     public int maxInventorySize = 20;
     public int maxStackSize = 99;
     public Dictionary<int, ItemStack> slotToStack = new();
+
+    protected override void Awake()
+    {
+        base.Awake();
+        // Register this instance as the IInventoryManagement service
+        ServiceLocator.Instance.Register<IInventoryManagement>(this);
+    }
+
+    // Interface property
+    public Dictionary<int, ItemStack> SlotToStack => slotToStack;
 
     public event Action<ItemSO, int> OnItemAdded;
     public event Action<ItemSO, int> OnItemRemoved;
@@ -52,30 +69,9 @@ public class Inventory : Singleton<Inventory>
             slot = emptySlot;
         }
 
-        if (OnItemAdded != null)
-        {
-            OnItemAdded.Invoke(itemType, slot);
-        }
+        if (OnItemAdded != null) OnItemAdded.Invoke(itemType, slot);
         Debug.Log($"Added {itemType.name} to inventory at slot {slot}. Stack amount: {slotToStack[slot].Amount}");
         return true;
-    }
-
-    private int FindStackableSlot(ItemSO itemType)
-    {
-        foreach (var kvp in slotToStack)
-            if (kvp.Value.ItemType == itemType && kvp.Value.Amount < maxStackSize)
-                return kvp.Key;
-
-        return -1;
-    }
-
-    private int GetFirstEmptySlot()
-    {
-        for (var i = 0; i < maxInventorySize; i++)
-            if (!slotToStack.ContainsKey(i))
-                return i;
-
-        return -1;
     }
 
     public bool RemoveItem(ItemSO itemType)
@@ -87,10 +83,7 @@ public class Inventory : Singleton<Inventory>
             slotToStack[slot].Amount -= 1;
 
             if (slotToStack[slot].Amount <= 0) slotToStack.Remove(slot);
-            if (OnItemRemoved != null)
-            {
-                OnItemRemoved.Invoke(itemType, slot);
-            }
+            if (OnItemRemoved != null) OnItemRemoved.Invoke(itemType, slot);
             Debug.Log($"Removed {itemType.name} from inventory. Items remaining: {slotToStack.Count}");
             return true;
         }
@@ -113,26 +106,11 @@ public class Inventory : Singleton<Inventory>
         stack.Amount -= amount;
         Debug.Log($"Consumed {itemType.name} from slot {slot}. Amount remaining: {stack.Amount}");
 
-        if (stack.Amount <= 0)
-        {
-            slotToStack.Remove(slot);
-        }
+        if (stack.Amount <= 0) slotToStack.Remove(slot);
 
-        if (OnItemRemoved != null)
-        {
-            OnItemRemoved.Invoke(itemType, slot);
-        }
+        if (OnItemRemoved != null) OnItemRemoved.Invoke(itemType, slot);
 
         return true;
-    }
-
-    private int FindSlotWithItem(ItemSO itemType)
-    {
-        foreach (var kvp in slotToStack)
-            if (kvp.Value.ItemType == itemType)
-                return kvp.Key;
-
-        return -1;
     }
 
     public bool TryMoveItem(int sourceSlot, int targetSlot)
@@ -151,10 +129,7 @@ public class Inventory : Singleton<Inventory>
             slotToStack.Add(targetSlot, stack);
             slotToStack.Remove(sourceSlot);
 
-            if (OnItemMoved != null)
-            {
-                OnItemMoved.Invoke(sourceSlot, targetSlot);
-            }
+            if (OnItemMoved != null) OnItemMoved.Invoke(sourceSlot, targetSlot);
         }
         else
         {
@@ -163,13 +138,38 @@ public class Inventory : Singleton<Inventory>
                 Debug.LogError("Failed to swap slotToStack dictionary entries");
                 return false;
             }
-            if (OnItemSwapped != null)
-            {
-                OnItemSwapped.Invoke(sourceSlot, targetSlot);
-            }
+
+            if (OnItemSwapped != null) OnItemSwapped.Invoke(sourceSlot, targetSlot);
         }
 
         return true;
+    }
+
+    private int FindStackableSlot(ItemSO itemType)
+    {
+        foreach (var kvp in slotToStack)
+            if (kvp.Value.ItemType == itemType && kvp.Value.Amount < maxStackSize)
+                return kvp.Key;
+
+        return -1;
+    }
+
+    private int GetFirstEmptySlot()
+    {
+        for (var i = 0; i < maxInventorySize; i++)
+            if (!slotToStack.ContainsKey(i))
+                return i;
+
+        return -1;
+    }
+
+    private int FindSlotWithItem(ItemSO itemType)
+    {
+        foreach (var kvp in slotToStack)
+            if (kvp.Value.ItemType == itemType)
+                return kvp.Key;
+
+        return -1;
     }
 
     public List<ItemStack> GetStacks()

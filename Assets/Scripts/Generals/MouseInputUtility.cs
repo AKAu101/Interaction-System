@@ -3,7 +3,7 @@ using UnityEngine.InputSystem;
 
 namespace Generals
 {
-    public static class MouseUtil
+    public static class MouseInputUtility
     {
         private static readonly Camera camera = Camera.main;
 
@@ -11,7 +11,7 @@ namespace Generals
         {
             if (camera == null)
             {
-                Debug.LogWarning("MouseUtil: No camera available to calculate world position.");
+                Debug.LogWarning("MouseInputUtility: No camera available to calculate world position.");
                 return Vector3.zero;
             }
 

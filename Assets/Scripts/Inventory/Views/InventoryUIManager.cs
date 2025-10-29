@@ -82,7 +82,7 @@ public class InventoryUIManager : Singleton<InventoryUIManager>, IUIStateManagem
             wrapper.SetActive(false);
 
             // Hide context menu when closing inventory
-            var contextMenu = FindObjectOfType<InventoryItemContextMenu>();
+            var contextMenu = FindFirstObjectByType<InventoryItemContextMenu>();
             if (contextMenu != null) contextMenu.HideMenu();
         }
 

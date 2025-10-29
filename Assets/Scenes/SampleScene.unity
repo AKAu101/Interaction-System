@@ -129,7 +129,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4168843507142889419, guid: c8bb8fb89cec98f44901fa58756cf99b, type: 3}
       propertyPath: m_Name
-      value: InteractableMoney (1)
+      value: Money
       objectReference: {fileID: 0}
     - target: {fileID: 8199846146349392539, guid: c8bb8fb89cec98f44901fa58756cf99b, type: 3}
       propertyPath: m_LocalPosition.x
@@ -402,7 +402,7 @@ GameObject:
   - component: {fileID: 330585545}
   - component: {fileID: 330585544}
   - component: {fileID: 330585547}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Main Camera
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
@@ -702,7 +702,7 @@ GameObject:
   - component: {fileID: 426762087}
   - component: {fileID: 426762085}
   - component: {fileID: 426762093}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -831,24 +831,12 @@ MonoBehaviour:
     m_ActionId: f57b89ec-8639-4292-8b29-cd57e7204125
     m_ActionName: 'Movement/OpenInventory[/Keyboard/tab]'
   - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 426762083}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: 
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
     m_ActionId: 1167afb5-48b0-427c-9f45-a59258e0f91a
     m_ActionName: 'Movement/DumpInventory[/Keyboard/k]'
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
-  m_DefaultActionMap: Movement
+  m_DefaultActionMap: PlayerActions
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
 --- !u!114 &426762086
@@ -2586,7 +2574,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4168843507142889419, guid: c8bb8fb89cec98f44901fa58756cf99b, type: 3}
       propertyPath: m_Name
-      value: InteractableMoney (3)
+      value: Money
       objectReference: {fileID: 0}
     - target: {fileID: 8199846146349392539, guid: c8bb8fb89cec98f44901fa58756cf99b, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2714,7 +2702,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1611764005}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: GroundCheck
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2746,7 +2734,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4168843507142889419, guid: c8bb8fb89cec98f44901fa58756cf99b, type: 3}
       propertyPath: m_Name
-      value: InteractableMoney (2)
+      value: Money
       objectReference: {fileID: 0}
     - target: {fileID: 8199846146349392539, guid: c8bb8fb89cec98f44901fa58756cf99b, type: 3}
       propertyPath: m_LocalPosition.x

@@ -28,7 +28,7 @@ public class InventoryItemUI : MonoBehaviour, IPointerClickHandler
             Debug.Log($"Right-clicked on item in slot {CurrentSlotIndex}");
 
             // Find the context menu in the scene
-            var contextMenu = FindObjectOfType<InventoryItemContextMenu>();
+            var contextMenu = FindFirstObjectByType<InventoryItemContextMenu>();
             if (contextMenu != null)
                 // Show menu at mouse position with item data
                 contextMenu.ShowMenu(MouseInputUtility.GetRawMouse(), CurrentSlotIndex, this, currentItemData);

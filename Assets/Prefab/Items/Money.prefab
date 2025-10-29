@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 3876662098744990028}
   - component: {fileID: 1874022317907739275}
   m_Layer: 0
-  m_Name: InteractableMoney
+  m_Name: Money
   m_TagString: Interactable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

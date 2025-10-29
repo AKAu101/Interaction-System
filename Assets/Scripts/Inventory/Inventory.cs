@@ -27,6 +27,7 @@ public class Inventory : Singleton<Inventory>, IInventoryManagement
 {
     public int maxInventorySize = 20;
     public int maxStackSize = 99;
+    [SerializeField] private GameObject inventoryDropChestPrefab;
     public Dictionary<int, ItemStack> slotToStack = new();
 
     protected override void Awake()
@@ -192,5 +193,84 @@ public class Inventory : Singleton<Inventory>, IInventoryManagement
     {
         slotToStack.Clear();
         Debug.Log("Inventory cleared.");
+    }
+
+    public List<ItemStack> DumpInventory()
+    {
+        // Create a copy of all items in the inventory
+        var dumpedItems = new List<ItemStack>();
+        foreach (var kvp in slotToStack)
+        {
+            dumpedItems.Add(new ItemStack(kvp.Value.ItemType, kvp.Value.Amount));
+        }
+
+        // Clear the inventory and notify listeners
+        var slotsToRemove = slotToStack.Keys.ToList();
+        foreach (var slot in slotsToRemove)
+        {
+            var itemType = slotToStack[slot].ItemType;
+            slotToStack.Remove(slot);
+            if (OnItemRemoved != null) OnItemRemoved.Invoke(itemType, slot);
+        }
+
+        Debug.Log($"Inventory dumped. {dumpedItems.Count} unique item stacks removed.");
+        return dumpedItems;
+    }
+
+    /// <summary>
+    ///     Spawns a drop chest at the specified position with all items from the inventory.
+    ///     Clears the inventory and returns the spawned chest GameObject.
+    /// </summary>
+    public GameObject SpawnDropChest(Vector3 position)
+    {
+        if (inventoryDropChestPrefab == null)
+        {
+            Debug.LogError("InventoryDropChestPrefab is not assigned in Inventory! Cannot spawn drop chest.");
+            return null;
+        }
+
+        // Dump the inventory and get all items
+        var dumpedItems = DumpInventory();
+
+        // Don't spawn chest if inventory is empty
+        if (dumpedItems.Count == 0)
+        {
+            Debug.Log("Inventory is empty, no drop chest spawned.");
+            return null;
+        }
+
+        // Spawn the chest at the specified position
+        var chestObject = Instantiate(inventoryDropChestPrefab, position, Quaternion.identity);
+
+        // Initialize the chest with the dumped items
+        var chest = chestObject.GetComponent<InventoryDropChest>();
+        if (chest != null)
+        {
+            chest.Initialize(dumpedItems);
+            Debug.Log($"Spawned drop chest at {position} with {dumpedItems.Count} item stacks");
+        }
+        else
+        {
+            Debug.LogError("Spawned chest prefab does not have InventoryDropChest component!");
+            Destroy(chestObject);
+            return null;
+        }
+
+        return chestObject;
+    }
+
+    /// <summary>
+    ///     Convenience method to spawn drop chest at player's current position.
+    ///     Typically called on player death.
+    /// </summary>
+    public GameObject SpawnDropChestAtPlayer(Transform playerTransform)
+    {
+        if (playerTransform == null)
+        {
+            Debug.LogError("Player transform is null! Cannot spawn drop chest.");
+            return null;
+        }
+
+        return SpawnDropChest(playerTransform.position);
     }
 }
